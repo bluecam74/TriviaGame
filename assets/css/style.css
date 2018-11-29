@@ -1,0 +1,45 @@
+body {
+    background: rgb(72, 79, 87);
+}
+.camaroPic {
+    padding: 0 60px 0 0;
+    background: black;
+}
+
+.fix {
+    padding: 0;
+    background: black;
+    color: white;
+
+}
+
+.titleDiv {
+    padding-top: 20px;
+}
+
+.titleDiv p{
+    margin: 50px 0 0 0;
+    padding-left: 100px;
+}
+
+.mainRow {
+    background: rgb(72, 79, 87);
+}
+
+.mainArea {
+    background: lightgray;
+    border: 1px solid black;
+    padding: 20px 40px 20px 40px;
+}
+
+.brdTest {
+    border: 1px solid black;
+}
+
+.questionArea {
+    padding-top: 30px 
+}
+
+.choicesArea {
+    padding-top: 30px 
+}

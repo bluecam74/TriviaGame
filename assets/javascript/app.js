@@ -1,87 +1,200 @@
 $(document).ready(function () {
 
     var intervalId = 0;
-    var time = 30;
+    var time = 20;
+    var wins = 0;
+    var losses = 0;
     var questions = [
         {
             question: 'What name was Cheverolet considering before settling on the name "Camaro"?',
-            choice_1: "The Cougar",
-            choice_2: "The Bullet",
-            choice_correct: "The Panther",
-            choice_4: "The Arrow"
+            choices: [["The Cougar"], ["The Bullet"], ["The Panther", "c"], ["The Arrow"]]
         },
         {
             question: "Before its debut, what other body style was Chevy considering for the Camaro but never made it to production?",
-            choice_1: "Four Door Sedan",
-            choice_correct: "Station Wagon",
-            choice_3: "Coupé Utility Pickup Muscle car",
-            choice_4: "Pickup Truck"
+            choices: [["Four Door Sedan"], ["Station Wagon", "c"], ["Coupé Utility Pickup Muscle car"], ["Pickup Truck"]]
         },
-       {
+        {
             question: "How many different engine options existed when the Camaro hit the market?",
-            choice_1: "4",
-            choice_2: "5",
-            choice_3: "6",
-            choice_correct: "7"
+            choices: [["4"], ["5"], ["6"], ["7", "c"]]
         },
         {
             question: "Of all the first generation model years, which had the most sales?",
-            choice_1: "1966",
-            choice_2: "1967",
-            choice_3: "1968",
-            choice_correct: "1969"
-        },
-         {
-            question: "What was the base price of the very first Camaros released?",
-            choice_1: "$1,987",
-            choice_correct: "$2,572",
-            choice_3: "$8,780",
-            choice_4: "$12,980"
+            choices: [["1966"], ["1967"], ["1968"], ["1969", "c"]]
         },
         {
             question: "How many Z/28's were built in 1975?",
-            choice_1: "75",
-            choice_2: "250",
-            choice_3: "700",
-            choice_correct: "1"
+            choices: [["75"], ["250"], ["700"], ["1", "c"]]
         },
         {
             question: "What was the base price of the very first Camaros released?",
-            choice_1: "$1,987",
-            choice_correct: "$2,572",
-            choice_3: "$8,780",
-            choice_4: "$12,980"
+            choices: [["$1,987"], ["$2,572", "c"], ["$8,780"], ["$12,980"]]
         },
         {
             question: "Which car was the second generation Camaro based off of?",
-            choice_correct: "Ferrari",
-            choice_2: "Ford Mustang",
-            choice_3: "Dodge Challenger",
-            choice_4: "Volkswagen Karmann Ghia"
+            choices: [["Ferrari", "c"], ["Ford Mustang"], ["Dodge Challenger"], ["Volkswagen Karmann Ghia"]]
         },
     ]
 
     var gameInSession = false;
-    var questionCount = 2 ;
+    var questionCount = 0;
 
     function newQuestion() {
         if (questionCount === questions.length) {
-            return
+            displayScore();
         } else {
-            $(".timerDisp").text("Time remaining: 00:30");
-            var x = questions[questionCount].question;
-            var currentQuest = x;
-            console.log(typeof currentQuest);
-            console.log(currentQuest);
-            console.log(x);
-            questionCount++;
+            time = 20;
+            $(".timerDisp").text("Time remaining: 00:20");
+            var currentQuest = questions[questionCount].question;
             $(".questionArea").text(currentQuest);
+            $(".buttonArea").empty();
+            populateButtons()
+
             if (!gameInSession) {
                 intervalId = setInterval(counting, 1000);
                 gameInSession = true;
             }
         }
     }
+
+    function displayScore() {
+        var win = $("<p>", {
+            text: "Correct: " + wins,
+            class: 'score'
+        });
+        var lose = $("<p>", {
+            text: "Incorrect: " + losses,
+            class: 'score'
+        });
+
+        var reset = $("<button>", {
+            text: "Start Over",
+            class: 'resetBtn'
+        });
+
+        $(".timerDisp").empty();
+        $(".questionArea").empty();
+        $(".buttonArea").empty();
+        $(".buttonArea").append(win);
+        $(".buttonArea").append("<p>");
+        $(".buttonArea").append(lose);
+        $(".buttonArea").append("<p>");
+        $(".buttonArea").append(reset);
+
+        $(".resetBtn").click(function () {
+            questionCount = 0;
+            wins = 0;
+            losses = 0;
+            newQuestion();
+        });
+    }
+
+    function populateButtons() {
+        var btn1 = $('<button/>', {
+            text: questions[questionCount].choices[0][0],
+            class: 'button1 choiceButtons'
+        });
+        $(".buttonArea").append(btn1);
+        $(".buttonArea").append("<p>");
+        $(".button1").click(function () {
+            if ((questions[questionCount].choices[0]).length == 2) {
+                clearInterval(intervalId);
+                displayCorrectImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+            else {
+                clearInterval(intervalId);
+                gameInSession = false
+                displayWrongImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+        });
+        var btn2 = $('<button/>', {
+            text: questions[questionCount].choices[1][0],
+            class: 'button2 choiceButtons'
+        });
+        $(".buttonArea").append(btn2);
+        $(".buttonArea").append("<p>");
+        $(".button2").click(function () {
+            if ((questions[questionCount].choices[1]).length == 2) {
+                clearInterval(intervalId);
+                displayCorrectImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+            else {
+                clearInterval(intervalId);
+                displayWrongImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+        });
+
+        var btn3 = $('<button/>', {
+            text: questions[questionCount].choices[2][0],
+            class: 'button3 choiceButtons'
+        });
+        $(".buttonArea").append(btn3);
+        $(".buttonArea").append("<p>");
+        $(".button3").click(function () {
+            if ((questions[questionCount].choices[2]).length === 2) {
+                clearInterval(intervalId);
+                displayCorrectImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+            else {
+                clearInterval(intervalId);
+                displayWrongImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+        });
+        var btn4 = $('<button/>', {
+            text: questions[questionCount].choices[3][0],
+            class: 'button4 choiceButtons'
+        });
+        $(".buttonArea").append(btn4);
+        $(".buttonArea").append("<p>");
+        $(".button4").click(function () {
+            if ((questions[questionCount].choices[3]).length == 2) {
+                clearInterval(intervalId);
+                displayCorrectImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+
+            }
+            else {
+                clearInterval(intervalId);
+                displayWrongImage()
+                questionCount++;
+                setTimeout(newQuestion, 3000);
+            }
+        });
+    }
+    function displayCorrectImage() {
+        $(".buttonArea").html("<img src = assets/images/69_chevy_side.jpg width='400px'>");
+        wins++
+        gameInSession = false;
+    }
+
+    function displayWrongImage() {
+        $(".buttonArea").html("<img src = assets/images/clunker_camaro.jpg width='400px'>");
+        losses++
+        gameInSession = false;
+    }
+
+    function displayTimeUpImage() {
+        $(".buttonArea").html("<img src = assets/images/times_up.jpg width='400px'>");
+        losses++
+    }
+
+
+
+
+
+
 
     function counting() {
 
@@ -90,9 +203,18 @@ $(document).ready(function () {
             $(".timerDisp").text("Time Remaining: 00:" + time);
         }
         else {
+            questionCount++;
+            losses++;
+            displayTimeUpImage();
+            clearInterval(intervalId);
+            $(".timerDisp").empty();
             $(".timerDisp").text("Times Up!");
+            gameInSession = false;
+            setTimeout(newQuestion, 3000);
+
         }
 
+        
     }
 
 

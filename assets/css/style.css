@@ -41,4 +41,26 @@ body {
 
 .choicesArea {
     padding-top: 30px 
+
+}
+
+.choiceButtons {
+    width:250px;
+    font-size: 24px;
+
+}
+
+.buttonArea {
+    text-align: center;
+}
+
+.score {
+    font-size: 40px;
+    color: black;
+    font-weight: 700;
+    text-align: center;
+}
+
+.resetBtn {
+    text-align: center;
 }

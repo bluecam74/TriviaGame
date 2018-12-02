@@ -204,7 +204,6 @@ $(document).ready(function () {
         }
         else {
             questionCount++;
-            losses++;
             displayTimeUpImage();
             clearInterval(intervalId);
             $(".timerDisp").empty();

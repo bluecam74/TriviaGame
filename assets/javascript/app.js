@@ -38,16 +38,40 @@ $(document).ready(function () {
     var gameInSession = false;
     var questionCount = 0;
 
+    function startMenu() {
+        $(".timerDisp").empty();
+        $(".questionArea").empty();
+        $(".buttonArea").empty();
+        var srt = $("<button>", {
+            text: "Start Game",
+            class: 'srtBtn'
+        });        
+        var srtImg = $("<img>", {
+            class: 'srtImg',
+            src: 'assets/images/emblem.jpg',
+            width: '400px',
+        });
+        $(".buttonArea").append(srtImg);
+        $(".buttonArea").append("<p>");
+        $(".buttonArea").append(srt);
+        
+        $(".srtBtn").click(function () {
+            newQuestion();
+        });
+        
+
+    }
+
     function newQuestion() {
         if (questionCount === questions.length) {
             displayScore();
         } else {
-            time = 20;
+            time = 19;
             $(".timerDisp").text("Time remaining: 00:20");
             var currentQuest = questions[questionCount].question;
             $(".questionArea").text(currentQuest);
             $(".buttonArea").empty();
-            populateButtons()
+            populateButtons();
 
             if (!gameInSession) {
                 intervalId = setInterval(counting, 1000);
@@ -84,7 +108,7 @@ $(document).ready(function () {
             questionCount = 0;
             wins = 0;
             losses = 0;
-            newQuestion();
+            startMenu();
         });
     }
 
@@ -190,17 +214,23 @@ $(document).ready(function () {
         losses++
     }
 
-
-
-
-
+    function convert() {
+        console.log("time :" + time);
+        var seconds = time;
+    
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+        return seconds;
+      }
+    
 
 
     function counting() {
-
+        var con = convert();
         if (time > 0) {
             time--;
-            $(".timerDisp").text("Time Remaining: 00:" + time);
+            $(".timerDisp").text("Time Remaining: 00:" + con);
         }
         else {
             questionCount++;
@@ -219,14 +249,6 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
-    newQuestion();
+    startMenu();
 
 });

@@ -6,7 +6,7 @@ $(document).ready(function () {
     var losses = 0;
     var questions = [
         {
-            question: 'What name was Cheverolet considering before settling on the name "Camaro"?',
+            question: 'What name was Chevrolet considering before settling on the name "Camaro"?',
             choices: [["The Cougar"], ["The Bullet"], ["The Panther", "c"], ["The Arrow"]]
         },
         {
